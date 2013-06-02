@@ -1,0 +1,64 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body
+{
+	font-size: 70%;
+	color: #000000;
+	background-color: #f1f1f1;
+}
+
+body, p, h1, h2, h3, table, td, th, ul, ol, textarea, input
+{
+	font-family: verdana,helvetica,arial,sans-serif;
+}
+h1,h2,h3 {
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+h2 {
+	font-size: 20pt;
+}
+h3 {
+	font-size: 13pt;
+}
+ol,ul {
+	margin: 0px;
+	margin-left: 25px;
+}
+p {
+	text-align: justify;
+	margin-bottom: 15px
+}
+table {
+	border-collapse: collapse;
+}
+
+div#all_encompass {
+	/*border: 1px solid black;*/
+	width: 672px;
+}
+div.page {
+	/* comment out the following border when done */
+	border-bottom: 1px dotted grey;
+	height: 842px;
+	page-break-after: auto;
+}
+
+h3.sub_h3 {
+	font-size: 13pt;
+	font-family: Verdana;
+	padding-bottom: 0px;
+}
+p.page_1 {
+	font-style: italic;
+}
+td.nice_td {
+	border: 1px solid black;
+	padding: 2px;
+	padding-left: 10px;
+}
+ul.square_list {
+	list-style-type: square;
+}

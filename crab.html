@@ -1,0 +1,259 @@
+<html>
+	<head>
+		<style type="text/css" >
+		
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+
+			div.allencompass {
+				width: 600px;
+			}
+			
+			div.title {
+				font-size: 24pt;
+				font-weight: bold;
+				text-align: center;
+			}
+			
+			td {
+				/*border: 1px dotted gray;*/
+			}
+			
+			td.half_title {
+				font-size: 14pt;
+				font-weight: bold;
+				text-align: center;
+			}
+			
+			#stat1, #stat2, #stat3, #optCap, #maxCap, #movement, #weight, #points, #hp, #armor {
+				padding: 0px 10px 0px 10px;
+				text-align: right;
+				font-family: monospace;
+			}
+			
+			#eq_tank {
+				font-family: monospace;
+				width: 250px;
+			}
+		
+		</style>
+	</head>		
+	<body>
+		<div class="allencompass" >
+			<div class="title" >
+				Warcrabs!
+			</div>
+			
+			<table width="100%" style="border-collapse: collapse" >
+				<tr>
+					<td class="half_title" width="50%" >
+						Stats
+					</td>
+					<td rowspan="3" ><img src="sheet/images/warcrab.gif" /></td>
+					<td class="half_title" width="50%" >
+						Info
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="top" >
+						<table>
+							<tr>
+								<td>
+									Strength:
+								</td>
+								<td id="stat1" >1</td>
+								<td>
+									<button type="button" id="b1m" onclick="javascript:decStat('1');" ><b>-</b></button>
+								</td>
+								<td width="100" ><div id="stat1_bar" style="background-color: gray; width: 10px" >&nbsp;</div></td>
+								<td>
+									<button type="button" id="b1p" onclick="javascript:incStat('1');" ><b>+</b></button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Dexterity:
+								</td>
+								<td id="stat2" >1</td>
+								<td>
+									<button type="button" id="b2m" onclick="javascript:decStat('2');" ><b>-</b></button>
+								</td>
+								<td width="100" ><div id="stat2_bar" style="background-color: gray; width: 10px" >&nbsp;</div></td>
+								<td>
+									<button type="button" id="b2p" onclick="javascript:incStat('2');" ><b>+</b></button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Endurance:
+								</td>
+								<td id="stat3" >1</td>
+								<td>
+									<button type="button" id="b3m" onclick="javascript:decStat('3');" ><b>-</b></button>
+								</td>
+								<td width="100" ><div id="stat3_bar" style="background-color: gray; width: 10px" >&nbsp;</div></td>
+								<td>
+									<button type="button" id="b3p" onclick="javascript:incStat('3');" ><b>+</b></button>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Points:
+								</td>
+								<td id="points" >12</td>
+								<td colspan="3" ><div id="points_bar" style="background-color: orange; width: 100%" >&nbsp;</div></td>
+							</tr>
+						</table>
+					</td>
+					<td align="center" valign="top" >
+						<table>
+							<tr>
+								<td align="right" >Optimum Shell Capacity:&nbsp;</td>
+								<td id="optCap" >0</td>
+							</tr>
+							<tr>
+								<td align="right" >Maximum Shell Capacity:&nbsp;</td>
+								<td id="maxCap" >0</td>
+							</tr>
+							<tr>
+								<td align="right" >Movement:&nbsp;</td>
+								<td id="movement" >0</td>
+							</tr>
+							<tr>
+								<td align="right" >Weight:&nbsp;</td>
+								<td id="weight" >1</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" >
+						<table style="margin-top: 50px" >
+							<tr>
+								<td>
+									<table>
+										<tr>
+											<td>Allowance:&nbsp;</td>
+											<td id="allowance" style="font-family: monospace" >$1.98</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="border: 1px solid black; padding: 3px;" >
+									Equipment:
+									<table style="border-collapse: collapse" >
+										<tr>
+											<td id="eq_tank" >Empty Clawed</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td align="center" >
+						<table style="margin-top: 50px" >
+							<tr>
+								<td>Hit Points:&nbsp;</td>
+								<td id="hp" style="font-family: monospace" >0</td>
+							</tr>
+							<tr>
+								<td>Armor:&nbsp;</td>
+								<td id="armor" style="font-family: monospace" >10</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			
+		</div>
+		
+		<div id="tmp" ></div>
+	</body>
+	
+	<script style="text/javascript" >
+		
+		var stat_el;
+		var stat_val; /* Strength, Dexterity, or Endurance */
+		var point_el;
+		var point_val;
+		var pbar_el;
+		var pbar_val;
+		
+		var allowance = 1.98;
+		var armor = 10;
+		var weight = 1;
+		
+		function incStat(n) {
+			stat_el = document.getElementById("stat" + n);
+			stat_val = parseInt(stat_el.innerHTML);
+			point_el = document.getElementById("points");
+			point_val = parseInt(point_el.innerHTML);
+			
+			if (point_val > 0 && stat_val < 10) {
+				stat_val++;
+				point_val--;
+				stat_el.innerHTML = stat_val;
+				point_el.innerHTML = point_val;
+				adjustStatBar("stat" + n,"_bar",10);
+				adjustPointBar("points_bar",12);
+				adjustInfo();
+			}
+		}
+		
+		function decStat(n) {
+			stat_el = document.getElementById("stat" + n);
+			stat_val = parseInt(stat_el.innerHTML);
+			point_el = document.getElementById("points");
+			point_val = parseInt(point_el.innerHTML);
+			
+			if (stat_val > 1) {
+				stat_val--;
+				point_val++;
+				stat_el.innerHTML = stat_val;
+				point_el.innerHTML = point_val;
+				adjustStatBar("stat" + n,"_bar",10);
+				adjustPointBar("points_bar",12);
+				adjustInfo();
+			}
+		}
+		
+		function adjustPointBar(bar,points) {
+			points = parseInt(points);
+			var cPoints = parseInt(document.getElementById("points").innerHTML);
+			var mp = (100.0/points);
+			cPoints = cPoints * mp;
+			document.getElementById(bar).style.width = cPoints + "%";
+		}
+		
+		function adjustStatBar(bar,more,points) {
+			points = parseInt(points);
+			var cPoints = parseInt(document.getElementById(bar).innerHTML);
+			var mp = (100.0/points);
+			cPoints = cPoints * mp;
+			document.getElementById(bar + more).style.width = cPoints + "%";
+		}
+		
+		function adjustInfo() {
+			var strength = parseInt(document.getElementById("stat1").innerHTML),
+				dexterity = parseInt(document.getElementById("stat2").innerHTML),
+				endurance = parseInt(document.getElementById("stat3").innerHTML),
+				weight = parseInt(document.getElementById("weight").innerHTML);
+			
+			document.getElementById("optCap").innerHTML = strength;
+			document.getElementById("maxCap").innerHTML = (strength + dexterity);
+			document.getElementById("hp").innerHTML = endurance;
+			if (weight > strength) {
+				document.getElementById("movement").innerHTML = (dexterity - (weight - strength));
+			} else {
+				document.getElementById("movement").innerHTML = dexterity;
+			}
+		}
+		
+		/*adjustInfo();
+		alert(document.getElementById("points_bar").style.width);*/
+	</script>
+	
+</html>
